@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <title>RSWhy</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <script src="//www.chartjs.org/assets/Chart.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD6NHTZhjW73HAaLfe2NnmcZO32uob4Fuw",
+        authDomain: "rswhyy.firebaseapp.com",
+        databaseURL: "https://rswhyy.firebaseio.com",
+        storageBucket: "rswhyy.appspot.com",
+        messagingSenderId: "1078392653007"
+      };
+      firebase.initializeApp(config);
+    </script>
+  </head>
+  <body class="homepage">
+    <div id="page-wrapper">
+
+      <!-- Header -->
+        <div id="header">
+          <!-- Inner -->
+            <div class="inner">
+              <header>
+                <h1 style="font-size: 40px">Daily Performance</h1>
+                <canvas id="updating-chart" width="1000" height="530"></canvas>
+              </header>
+            </div>
+
+          <!-- Nav -->
+            <nav id="nav">
+              <ul>
+                <li><a href="/static/html/index.html">Home</a></li>
+                <li><a href="rsi.html">What is RSI?</a></li>
+                <li><a href="/static/html/chart.html">Charts</a></li>
+              </ul>
+            </nav>
+
+        </div>
+
+
+    </div>
+    <script>
+      var db = firebase.database();
+      var ref = db.ref("stuff");
+      var canvas = document.getElementById('updating-chart'),
+      ctx = canvas.getContext('2d'),
+      startingData = {
+        labels: [1, 2, 3, 4, 5, 6, 7],
+        datasets: [
+            {
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                data: [0, 0, 0, 0, 0, 0, 0]
+            },
+        ]
+      },
+      latestLabel = startingData.labels[6];
+      // Reduce the animation steps for demo clarity.
+      var myLiveChart = new Chart(ctx).Line(startingData, 
+        {
+          animationSteps: 15,
+          scaleFontColor: "rgba(255,255,255,.9)",
+          scaleGridLineColor : "rgba(255,255,255,.5)",
+        }
+      );
+
+      ref.on('child_added', function(child){
+        myLiveChart.addData([Math.random() * 20 + 80], ++latestLabel);
+        myLiveChart.removeData();
+      });
+
+      // setInterval(function(){
+      //   // Add two random numbers for each dataset
+        // myLiveChart.addData([Math.random() * 100], ++latestLabel);
+      //   // Remove the first point so we dont just add values forever
+      //   myLiveChart.removeData();
+      // }, 1000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "htn2016",
+  "version": "1.0.0",
+  "description": "Project for htn2016",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Qile, Mei, Lin",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chart.js": "^2.2.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "firebase": "^3.4.0",
+    "lodash": "^4.15.0",
+    "request": "^2.75.0",
+    "socket.io": "^1.4.8"
+  }
+}
