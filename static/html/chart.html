@@ -73,11 +73,10 @@
         }
       );
 
-      ref.on('child_added', function(child){
+      ref.on('child_added', function(childSnapshot, prevChildKey) {
         myLiveChart.addData([Math.random() * 20 + 80], ++latestLabel);
         myLiveChart.removeData();
       });
-
       // setInterval(function(){
       //   // Add two random numbers for each dataset
         // myLiveChart.addData([Math.random() * 100], ++latestLabel);
